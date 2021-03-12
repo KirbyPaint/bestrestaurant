@@ -48,16 +48,22 @@ namespace BestRestaurant.Controllers
     public ActionResult Details(int id)
     {
       // Creates a Cuisine object called thisCuisine, which looks through the database for the Cuisine ID that matches the submitted ID
-      Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(category => category.CuisineId == id);
+      // Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(category => category.CuisineId == id);
 
       // TESTING
       // This should create a list object of all the Restaurant database info
-      Restaurant model = _db.Restaurants.FirstOrDefault(category => category.CuisineId == id);
+      // Restaurant model = _db.Restaurants.FirstOrDefault(category => category.CuisineId == id);
       // 
 
       // Returns the Details page, now populated by the Cuisine that matches this ID
-      return View(model);
+      // return View(model);
       // Can't just do return View(model); because the Details page matching this ID needs a Cuisine object
+
+
+      // Tien's solution:
+      ViewBag.thisCuisine = _db.Cuisines.FirstOrDefault(cuisine => cuisine.CuisineId == id);
+      ViewBag.restaurants = _db.Restaurants.Where(restaurant => restaurant.CuisineId == id).ToList();
+      return View();
     }
     public ActionResult Edit(int id)
     {
@@ -87,5 +93,20 @@ namespace BestRestaurant.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    // Test stuff brought in from the Pierre project
+    // [HttpPost("/cuisines/{cuisineId}/restaurants")]
+    // public ActionResult Create(int cuisineId, string restaurantTitle, string restaurantDescription, string restaurantPrice, string restaurantDate)
+    // {
+    //   Dictionary<string, object> model = new Dictionary<string, object>();
+    //   Cuisine foundCuisine = Cuisine.Find(cuisineId);
+    //   Restaurant newRestaurant = new Restaurant(restaurantTitle, restaurantDescription, restaurantPrice, restaurantDate);
+    //   foundCuisine.AddRestaurant(newRestaurant);
+    //   List<Restaurant> cuisineRestaurants = foundCuisine.Restaurants;
+    //   model.Add("restaurants", cuisineRestaurants);
+    //   model.Add("cuisine", foundCuisine);
+    //   return View("Show", model);
+    // }
+    // Not currently working
   }
 }

@@ -2,11 +2,12 @@
   Layout = "_Layout";
 }
 
-@model BestRestaurant.Models.Restaurant
+@using BestRestaurant.Models
+@model BestRestaurant.Models.Cuisine
 
 <h2>Cuisine Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Cuisine.Name)</h3>
+<h3>@ViewBag.thisCuisine.Name</h3>
 
 <hr>
 
@@ -14,18 +15,19 @@
 
 @* We are so close, just need a loop to get ALL of the model items and then check against the comparator below *@
 
-@if (Model.CuisineId == Model.Cuisine.CuisineId)
+@foreach(Restaurant restaurant in ViewBag.restaurants)
 {
-  <li>@Html.ActionLink($"{Model.Name}", "Details", new { id = Model.RestaurantId })</li>
+	<li>@restaurant.Name</li>
 }
 
 <p></p>
 
-@Html.Partial("Partial")
+@* @Html.Partial("Partial") *@
 
 <hr>
-<p>@Html.ActionLink("Edit Cuisine", "Edit", new { id = Model.CuisineId })</p>
-<p>@Html.ActionLink("Delete Cuisine", "Delete", new { id = Model.CuisineId })</p>
+<p>@Html.ActionLink("Edit Cuisine", "Edit", new { id = ViewBag.thisCuisine.CuisineId })</p>
+
+<p>@Html.ActionLink("Delete Cuisine", "Delete", new { id = ViewBag.thisCuisine.CuisineId })</p>
 <p>@Html.ActionLink("Back to list", "Index")</p>
 
 @* @{
