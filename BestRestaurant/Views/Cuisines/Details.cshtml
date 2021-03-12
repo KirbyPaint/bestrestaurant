@@ -2,11 +2,23 @@
   Layout = "_Layout";
 }
 
+@using BestRestaurant.Models
 @model BestRestaurant.Models.Cuisine
 
 <h2>Cuisine Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
-    <p>@Html.ActionLink("Edit Cuisine", "Edit", new { id = Model.CuisineId })</p>
-    <p>@Html.ActionLink("Delete Cuisine", "Delete", new { id = Model.CuisineId })</p>
-    <p>@Html.ActionLink("Back to list", "Index")</p>
+<h3>@ViewBag.thisCuisine.Name</h3>
+
+<hr>
+
+<p>Restaurants that share this attribute are:</p>
+
+@foreach(Restaurant restaurant in ViewBag.restaurants)
+{
+	<li>@restaurant.Name</li>
+}
+
+<hr>
+<p>@Html.ActionLink("Edit Cuisine", "Edit", new { id = ViewBag.thisCuisine.CuisineId })</p>
+<p>@Html.ActionLink("Delete Cuisine", "Delete", new { id = ViewBag.thisCuisine.CuisineId })</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>
